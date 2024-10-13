@@ -4,19 +4,14 @@
         .radio-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            /* Dua kolom */
             grid-template-rows: auto auto;
-            /* Dua baris */
             gap: 20px;
-            /* Jarak antar elemen */
             max-width: 400px;
-            /* Lebar maksimal */
             margin: 20px auto;
         }
 
         .radio-group input[type="radio"] {
             display: none;
-            /* Sembunyikan input asli */
         }
 
         .radio-group label {
@@ -30,35 +25,28 @@
             transition: background-color 0.3s, color 0.3s;
             text-align: center;
             min-width: 120px;
-            /* Lebar minimal untuk label */
         }
 
-        /* Warna default untuk setiap label */
         #hadir+label {
             border-color: #28a745;
-            /* Hijau untuk hadir */
             color: #28a745;
         }
 
         #telat+label {
             border-color: #ffc107;
-            /* Kuning untuk telat */
             color: #ffc107;
         }
 
         #tidak-hadir+label {
             border-color: #dc3545;
-            /* Merah untuk tidak hadir */
             color: #dc3545;
         }
 
         #izin+label {
             border-color: #17a2b8;
-            /* Biru untuk izin */
             color: #17a2b8;
         }
 
-        /* Gaya untuk radio button terpilih */
         #hadir:checked+label {
             background-color: #28a745;
             color: white;
@@ -122,7 +110,6 @@
             if (decodedText !== lastResult) {
                 ++countResults;
                 lastResult = decodedText;
-                // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
             }
         }
@@ -130,8 +117,19 @@
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", {
                 fps: 10,
-                qrbox: 250
+                qrbox: 250,
+                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
             });
+
         html5QrcodeScanner.render(onScanSuccess);
+
+        html5QrcodeScanner.start(
+            { facingMode: { exact: "environment" } },
+            { fps: 10, qrbox: 250 },
+            onScanSuccess
+        );
+
+        document.querySelector('.html5-qrcode-button-camera-stop').style.display = 'inline-block';
+        document.querySelector('.html5-qrcode-camera-selector').style.display = 'none';
     </script>
 @endsection
