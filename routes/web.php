@@ -5,12 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Karyawan\IndexController;
 
 Route::get('/verify/{token}', [AuthController::class, 'verify']);
 
 // route middleware guest
 Route::middleware(['guest'])->group(function () {
-    
+
     // route auth
     Route::get('/', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginAction']);
@@ -19,14 +20,19 @@ Route::middleware(['guest'])->group(function () {
     Route::get('reset-password/{token}', [AuthController::class, 'resetPassword']);
     Route::put('reset-password/{token}/action', [AuthController::class, 'resetPasswordAction']);
 
+    Route::get('index', [IndexController::class, 'index'])->name('index');
+    Route::get('profile', [IndexController::class, 'profile'])->name('profile');
+    Route::get('wfo', [IndexController::class, 'wfo'])->name('wfo');
+    Route::get('wfh', [IndexController::class, 'wfh'])->name('wfh');
+
 });
-    
+
 // middleware auth
 Route::group(['middleware' => 'auth'], function () {
-    
+
     // grup auth
-    Route::get('/logout', [AuthController::class, 'logout']);
-    
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
     // grup backoffice
     Route::group(['prefix' => 'backoffice'], function () {
 
@@ -55,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::group(['prefix' => 'user'], function () {
                 Route::get('/', [UserController::class, 'index']);
                 Route::post('/create', [UserController::class, 'create']);
-    
+
                 // grup user_id
                 Route::group(['prefix' => '{user_id}'], function () {
                     Route::put('/update', [UserController::class, 'update']);
@@ -66,11 +72,11 @@ Route::group(['middleware' => 'auth'], function () {
                     Route::post('/update-password', [UserController::class, 'updatePassword']);
                     Route::get('/delete', [UserController::class, 'delete']);
                 });
-    
+
             });
 
         });
-    
+
     });
 
 });
