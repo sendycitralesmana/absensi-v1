@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Repository\RoleRepository;
 use App\Http\Repository\UserRepository;
 use App\Http\Requests\User\CreateRequest;
+use PhpParser\Node\Stmt\TryCatch;
 
 class UserController extends Controller
 {
@@ -32,6 +33,16 @@ class UserController extends Controller
             $user = $this->userRepository->store($request);
             return redirect('/backoffice/user-data/user')->with('success', 'Data pengguna telah ditambahkan, beritahu ' . $user->name . ' untuk melakukan verifikasi akun');
 
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->userRepository->delete($id);
+            return redirect()->back()->with('success', 'Pengguna telah di hapus');
         } catch (\Throwable $th) {
             throw $th;
         }

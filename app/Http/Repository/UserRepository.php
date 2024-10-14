@@ -78,4 +78,29 @@ class UserRepository
         }
     }
 
+    public function update($request, $id)
+    {
+        try {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role_id = $request->role;
+            $user->save();
+            return $user;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+            return $user;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
 }

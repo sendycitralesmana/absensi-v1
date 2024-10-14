@@ -32,7 +32,7 @@ class RoleController extends Controller
         $this->roleRepository->update($request, $id);
         return redirect()->back()->with('success', 'Peran telah diubah');
     }
-
+    
     public function delete($id)
     {
         $this->roleRepository->delete($id);

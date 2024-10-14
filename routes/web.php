@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AbsenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\QrCodeController;
 
 Route::get('/verify/{token}', [AuthController::class, 'verify']);
 
@@ -70,7 +72,38 @@ Route::group(['middleware' => 'auth'], function () {
             });
 
         });
-    
+
+        // grup absensi data
+        Route::group(['prefix' => 'absensi-data'], function () {
+
+            // grup qrcode
+            Route::group(['prefix' => 'qrcode'], function () {
+                Route::get('/', [QrCodeController::class, 'index']);
+                Route::post('/create', [QrCodeController::class, 'create']);
+
+                // grup qrcode_id
+                Route::group(['prefix' => '{qrcode_id}'], function () {
+                    Route::put('/update', [QrCodeController::class, 'update']);
+                    Route::get('/delete', [QrCodeController::class, 'delete']);
+                });
+
+            });
+
+            // grup absensi
+            Route::group(['prefix' => 'absensi'], function () {
+                Route::get('/', [AbsenController::class, 'index']);
+            });
+
+        });
+
+        // route absen
+        Route::post('/absen', [AbsenController::class, 'absen']);
+
+
+    });
+
+    Route::post('/test', function(){
+        dd('absen');
     });
 
 });

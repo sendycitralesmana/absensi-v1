@@ -118,6 +118,7 @@
 <!-- Select2 -->
 <script src="{{ asset('assets/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
 
+
 <!-- page script -->
 <script>
   $(function () {

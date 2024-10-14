@@ -61,7 +61,7 @@ class AuthController extends Controller
             // $user->remember_token = null;
             $user->email_verified_at = now();
             $user->save();
-            return redirect('/login')->with('success', 'Akun anda telah diverifikasi. Silahkan masuk');
+            return redirect('/')->with('success', 'Akun anda telah diverifikasi. Silahkan masuk');
         } else {
             abort(404);
         }
