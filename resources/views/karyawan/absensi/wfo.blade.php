@@ -80,8 +80,8 @@
                     <img src="{{ asset('assets/karyawan/img-new/prodil.png') }}" alt="Profile Picture">
                 </div>
                 <div class="user-details">
-                    <h3>Dwi Sintia</h3>
-                    <span class="badge">Developer</span>
+                    <h3>{{ Auth::user()->name }}</h3>
+                    {{--  <span class="badge">Developer</span>  --}}
                 </div>
             </div>
         </div>
@@ -99,8 +99,8 @@
                     <a href="{{ route('index') }}">Kembali</a>
                 </div>
             </form>
-            
-            <form action="/backoffice/absen" method="POST" id="form">
+
+            <form action="/karyawan/absen" method="POST" id="form">
                 @csrf
                 <input type="hidden" name="qrcode" id="qrcode">
             </form>
@@ -120,7 +120,7 @@
             }
 
             $('#result').val(decodedText);
-            let id = decodedText;    
+            let id = decodedText;
 
             html5QrcodeScanner.clear().then(_ => {
                 document.getElementById('qrcode').value = id;

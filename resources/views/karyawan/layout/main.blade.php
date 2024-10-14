@@ -19,6 +19,7 @@
 			@yield('content')
 		</section>
 	</div>
+    @include('sweetalert::alert')
 	<script src="{{ asset('assets/karyawan/js/jquery-min-3.6.0.js') }}"></script>
 	<script src="{{ asset('assets/karyawan/js/bootstrap.bundle.min.js') }}"></script>
 </body>

@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\AbsenRepository;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    private $absenRepository;
+
+    public function __construct(AbsenRepository $absenRepository)
+    {
+        $this->absenRepository = $absenRepository;
+    }
     public function index(){
-        return view('karyawan.index');
+        $absens = $this->absenRepository->getAbsenUserId();
+
+        return view('karyawan.index', compact('absens'));
     }
 
     public function profile(){

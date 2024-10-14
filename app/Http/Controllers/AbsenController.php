@@ -31,27 +31,49 @@ class AbsenController extends Controller
 
         if ($qr == $data) {
 
-            
+
             if ($checkAbsenToday) {
 
                 if ($checkAbsenToday->jam_pulang != null) {
-                    dd('Anda sudah absen hari ini');
-                    // return redirect()->back()->with('sukses', 'Anda sudah absen hari ini');
+                    alert()->error('Gagal', 'Anda sudah absen hari ini');
+                    return redirect()->back();
                 }
-                
+
                 $this->absenRepository->jamPulang();
-                dd('jamPulang');
-                // return redirect()->back()->with('pulang', 'Absen berhasil');
-                
+                alert()->success('Berhasil', 'Absen Pulang Berhasil');
+                return redirect()->back();
+
             }
-            
+
             $this->absenRepository->jamMasuk($request);
-            dd('jamMasuk');
-            // return redirect()->back()->with('masuk', 'Absen berhasil');
+            alert()->success('Berhasil', 'Absen Masuk Berhasil');
+            return redirect()->back();
 
         } else {
             return redirect()->back()->with('qrCodeInvalid', 'Absen gagal qr code tidak sesuai');
         }
+
+    }
+    public function absen_wfh (Request $request)
+    {
+        $request->validate([
+            'keterangan' => 'required|in:Hadir,Telat,Tidak Hadir,Izin',
+        ],[
+            'keterangan.required' => 'Keterangan harus dipilih'
+        ]);
+        $checkAbsenToday = $this->absenRepository->getAbsenTodayByUserId();
+
+        if ($checkAbsenToday) {
+
+            if ($checkAbsenToday->jam_masuk != null) {
+                alert()->error('Gagal', 'Anda sudah absen hari ini');
+                return redirect()->back();
+            }
+        }
+
+        $this->absenRepository->wfh($request);
+        alert()->success('Berhasil', 'Absen Masuk Berhasil');
+        return redirect('/karyawan');
 
     }
 

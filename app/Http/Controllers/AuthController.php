@@ -50,6 +50,9 @@ class AuthController extends Controller
         // login success
         $request->session()->regenerate();
         Auth::login($user);
+        if ($user->role->role == 'Karyawan') {
+            return redirect()->intended('/karyawan');
+        }
         return redirect()->intended('/backoffice/dashboard');
 
     }

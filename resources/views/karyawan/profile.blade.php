@@ -17,8 +17,8 @@
                     <img src="{{ asset('assets/karyawan/img-new/prodil.png') }}" alt="">
                 </div>
                 <div class="user-details">
-                    <h3>Dwi Sintia</h3>
-                    <span class="badge">Developer</span>
+                    <h3>{{ Auth::user()->name }}</h3>
+                    {{--  <span class="badge">Developer</span>  --}}
                 </div>
             </div>
         </div>

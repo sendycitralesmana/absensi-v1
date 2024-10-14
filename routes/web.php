@@ -27,10 +27,17 @@ Route::middleware(['guest'])->group(function () {
 // middleware auth
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('karyawan', [IndexController::class, 'index'])->name('index');
-    Route::get('profile', [IndexController::class, 'profile'])->name('profile');
-    Route::get('wfo', [IndexController::class, 'wfo'])->name('wfo');
-    Route::get('wfh', [IndexController::class, 'wfh'])->name('wfh');
+    Route::middleware('role:Karyawan')->group(function () {
+        Route::group(['prefix' => 'karyawan'], function () {
+            Route::get('/', [IndexController::class, 'index'])->name('index');
+            Route::get('/profile', [IndexController::class, 'profile'])->name('profile');
+            Route::get('/wfo', [IndexController::class, 'wfo'])->name('wfo');
+            Route::get('/wfh', [IndexController::class, 'wfh'])->name('wfh');
+            Route::post('/absen', [AbsenController::class, 'absen']);
+            Route::post('/absen-wfh', [AbsenController::class, 'absen_wfh']);
+        });
+
+    });
 
     // grup auth
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -103,7 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         // route absen
-        Route::post('/absen', [AbsenController::class, 'absen']);
+
 
 
     });

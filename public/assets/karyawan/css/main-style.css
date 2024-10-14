@@ -566,6 +566,10 @@ input#password:focus-visible {
     justify-content: space-between;
     margin-top: 10px;
 }
+.tracker-items {
+    display: flex;
+    justify-content: space-between;
+}
 
 .masuk,
 .pulang {

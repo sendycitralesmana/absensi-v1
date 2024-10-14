@@ -15,6 +15,14 @@ class AbsenRepository
             throw $th;
         }
     }
+    public function getAbsenUserId()
+    {
+        try {
+            return Absen::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 
     public function getAbsenToday()
     {
@@ -40,6 +48,21 @@ class AbsenRepository
             $absen = new Absen;
             $absen->user_id = Auth::user()->id;
             $absen->jam_masuk = now();
+            $absen->status = 'WFO';
+            $absen->save();
+            return $absen;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function wfh($request)
+    {
+        try {
+            $absen = new Absen;
+            $absen->user_id = Auth::user()->id;
+            $absen->jam_masuk = now();
+            $absen->status = 'WFH';
+            $absen->keterangan = $request->keterangan;
             $absen->save();
             return $absen;
         } catch (\Throwable $th) {

@@ -92,42 +92,47 @@
                     <img src="{{ asset('assets/karyawan/img-new/prodil.png') }}" alt="Profile Picture">
                 </div>
                 <div class="user-details">
-                    <h3>Dwi Sintia</h3>
-                    <span class="badge">Developer</span>
+                    <h3>{{ Auth::user()->name }}</h3>
+                    {{--  <span class="badge">Developer</span>  --}}
                 </div>
             </div>
 
         </div>
         @include('karyawan.layout.main-menu')
-        </div>
-        <div class="wfh-choice d-flex aling-items-center justify-content-center">
-            <form action="">
-                <div class="radio-grid">
-                    <div class="radio-group">
-                        <input type="radio" id="hadir" name="wfo" value="hadir">
-                        <label for="hadir">Hadir</label>
-                    </div>
-                    <div class="radio-group">
-                        <input type="radio" id="telat" name="wfo" value="telat">
-                        <label for="telat">Terlambat</label>
-                    </div>
-                    <div class="radio-group">
-                        <input type="radio" id="tidak-hadir" name="wfo" value="tidak-hadir">
-                        <label for="tidak-hadir">Tidak Hadir</label>
-                    </div>
-                    <div class="radio-group">
-                        <input type="radio" id="izin" name="wfo" value="izin">
-                        <label for="izin">Izin</label>
-                    </div>
+    </div>
+    <div class="wfh-choice d-flex aling-items-center justify-content-center">
+        <form action="/karyawan/absen-wfh" method="POST">
+            @csrf
+            <div class="radio-grid">
+                <div class="radio-group">
+                    <input type="radio" id="hadir" name="keterangan" value="Hadir">
+                    <label for="hadir">Hadir</label>
                 </div>
-
-                <div class="sign-in mt-32">
-                    <button type="submit">Kirim</button>
+                <div class="radio-group">
+                    <input type="radio" id="telat" name="keterangan" value="Telat">
+                    <label for="telat">Terlambat</label>
                 </div>
-                <div class="sign-in mt-2 mb-3">
-                    <a href="{{ route('index') }}">Kembali</a>
+                <div class="radio-group">
+                    <input type="radio" id="tidak-hadir" name="keterangan" value="Tidak Hadir">
+                    <label for="tidak-hadir">Tidak Hadir</label>
                 </div>
-            </form>
-        </div>
+                <div class="radio-group">
+                    <input type="radio" id="izin" name="keterangan" value="Izin">
+                    <label for="izin">Izin</label>
+                </div>
+            </div>
+            @if ($errors->has('keterangan'))
+                <div class="alert alert-danger mt-2">
+                    {{ $errors->first('keterangan') }}
+                </div>
+            @endif
+            <div class="sign-in mt-32">
+                <button type="submit">Kirim</button>
+            </div>
+            <div class="sign-in mt-2 mb-3">
+                <a href="{{ route('index') }}">Kembali</a>
+            </div>
+        </form>
+    </div>
     </div>
 @endsection
