@@ -36,18 +36,18 @@ class AbsenController extends Controller
 
                 if ($checkAbsenToday->jam_pulang != null) {
                     alert()->error('Gagal', 'Anda sudah absen hari ini');
-                    return redirect()->back();
+                    return redirect('/karyawan');
                 }
 
                 $this->absenRepository->jamPulang();
                 alert()->success('Berhasil', 'Absen Pulang Berhasil');
-                return redirect()->back();
+                return redirect('/karyawan');
 
             }
 
             $this->absenRepository->jamMasuk($request);
             alert()->success('Berhasil', 'Absen Masuk Berhasil');
-            return redirect()->back();
+            return redirect('/karyawan');
 
         } else {
             return redirect()->back()->with('qrCodeInvalid', 'Absen gagal qr code tidak sesuai');
