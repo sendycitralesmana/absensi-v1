@@ -22,35 +22,80 @@
 <section class="content">
 
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-6">
 
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Peran</h3>
+                    <h3 class="card-title">Qr Code</h3>
 
                     <div class="card-tools">
-                        
+                        <button title="Tambah" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#generate">
+                            <span class="fa fa-qrcode"></span> Generate
+                        </button>
+                        @include('backoffice.absensi-data.qrcode.modal.generate')
 
                         <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
                             data-toggle="tooltip" title="Collapse">
-                            <i class="fas fa-minus"></i></button>
+                            <i class="fas fa-minus"></i>
+                        </button>
                     </div>
 
                 </div>
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div id="qr-reader" style="width:500px"></div>
+                        <div class="col-md-12">
+
+                            @if(session('generate'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Generate </strong>{{ session('generate') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+
+                            @if ($qrcode->count() > 0)
+                                <div class="text-center">
+                                    {!! $qrCode !!}
+                                </div>
+                            @else
+                                <h4 class="text-center">Belum ada Qr Code</h4>
+                            @endif
+
+                            {{-- <div id="qr-reader" style="width:500px"></div>
                             <div id="qr-reader-results"></div>
-                
-                            {{-- <input type="hidden" name="result" id="result"> --}}
                             <form action="/backoffice/absen" method="POST" id="form">
                                 @csrf
                                 <input type="hidden" name="qrcode" id="qrcode">
-                            </form>
+                            </form> --}}
+
                         </div>
-                        <div class="col-md-6">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Data Absen {{ now()->locale('ID')->isoFormat('dddd, D MMMM YYYY') }}</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
+                            data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        
+                        <div class="col-md-12">
                             @if(session('masuk'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <strong>Masuk </strong>{{ session('masuk') }}
@@ -94,7 +139,6 @@
                                         <th>Nama</th>
                                         <th>Jam Masuk</th>
                                         <th>Jam Pulang</th>
-                                        <th>Tanggal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,7 +148,6 @@
                                         <td>{{ $absen->user->name }}</td>
                                         <td>{{ $absen->jam_masuk }}</td>
                                         <td>{{ $absen->jam_pulang }}</td>
-                                        <td>{{ $absen->created_at->locale('ID')->isoFormat('dddd, D MMMM YYYY') }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

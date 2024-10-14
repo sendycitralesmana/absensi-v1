@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repository\AbsenRepository;
+use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,8 +24,9 @@ class AbsenController extends Controller
 
     public function absen (Request $request)
     {
+        $qrcode = QrCode::first();
         $qr = $request->qrcode;
-        $data = 123456789;
+        $data = $qrcode->qrcode;
         $checkAbsenToday = $this->absenRepository->getAbsenTodayByUserId();
 
         if ($qr == $data) {
@@ -33,16 +35,19 @@ class AbsenController extends Controller
             if ($checkAbsenToday) {
 
                 if ($checkAbsenToday->jam_pulang != null) {
-                    return redirect()->back()->with('sukses', 'Anda sudah absen hari ini');
+                    dd('Anda sudah absen hari ini');
+                    // return redirect()->back()->with('sukses', 'Anda sudah absen hari ini');
                 }
                 
                 $this->absenRepository->jamPulang();
-                return redirect()->back()->with('pulang', 'Absen berhasil');
+                dd('jamPulang');
+                // return redirect()->back()->with('pulang', 'Absen berhasil');
                 
             }
             
             $this->absenRepository->jamMasuk($request);
-            return redirect()->back()->with('masuk', 'Absen berhasil');
+            dd('jamMasuk');
+            // return redirect()->back()->with('masuk', 'Absen berhasil');
 
         } else {
             return redirect()->back()->with('qrCodeInvalid', 'Absen gagal qr code tidak sesuai');

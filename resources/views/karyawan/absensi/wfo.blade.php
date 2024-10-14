@@ -92,13 +92,19 @@
                     <div id="qr-reader" style="width:100%"></div>
                     <div id="qr-reader-results"></div>
                 </div>
-                <div class="sign-in mt-32">
+                {{-- <div class="sign-in mt-32">
                     <button type="submit">Absen</button>
-                </div>
+                </div> --}}
                 <div class="sign-in mt-2 mb-3">
                     <a href="{{ route('index') }}">Kembali</a>
                 </div>
             </form>
+            
+            <form action="/backoffice/absen" method="POST" id="form">
+                @csrf
+                <input type="hidden" name="qrcode" id="qrcode">
+            </form>
+
         </div>
     </div>
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -112,6 +118,14 @@
                 lastResult = decodedText;
                 console.log(`Scan result ${decodedText}`, decodedResult);
             }
+
+            $('#result').val(decodedText);
+            let id = decodedText;    
+
+            html5QrcodeScanner.clear().then(_ => {
+                document.getElementById('qrcode').value = id;
+                document.getElementById('form').submit();
+            });
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(

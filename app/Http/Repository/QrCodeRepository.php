@@ -3,6 +3,7 @@
 namespace App\Http\Repository;
 
 use App\Models\QrCode;
+use Illuminate\Support\Str;
 
 class QrCodeRepository
 {
@@ -16,11 +17,10 @@ class QrCodeRepository
         }
     }
 
-    public function store($request)
+    public function generate()
     {
         try {
-            $qrcode = rand(1111111111, 9999999999);
-
+            $qrcode = Str::random(40);
             $qrCode = new QrCode;            
             $qrCode->qrcode = $qrcode;
             $qrCode->save();

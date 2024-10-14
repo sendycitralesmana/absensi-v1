@@ -22,15 +22,15 @@ Route::middleware(['guest'])->group(function () {
     Route::get('reset-password/{token}', [AuthController::class, 'resetPassword']);
     Route::put('reset-password/{token}/action', [AuthController::class, 'resetPasswordAction']);
 
-    Route::get('index', [IndexController::class, 'index'])->name('index');
-    Route::get('profile', [IndexController::class, 'profile'])->name('profile');
-    Route::get('wfo', [IndexController::class, 'wfo'])->name('wfo');
-    Route::get('wfh', [IndexController::class, 'wfh'])->name('wfh');
-
 });
 
 // middleware auth
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('karyawan', [IndexController::class, 'index'])->name('index');
+    Route::get('profile', [IndexController::class, 'profile'])->name('profile');
+    Route::get('wfo', [IndexController::class, 'wfo'])->name('wfo');
+    Route::get('wfh', [IndexController::class, 'wfh'])->name('wfh');
 
     // grup auth
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
             // grup qrcode
             Route::group(['prefix' => 'qrcode'], function () {
                 Route::get('/', [QrCodeController::class, 'index']);
-                Route::post('/create', [QrCodeController::class, 'create']);
+                Route::post('/generate', [QrCodeController::class, 'generate']);
 
                 // grup qrcode_id
                 Route::group(['prefix' => '{qrcode_id}'], function () {
@@ -105,11 +105,6 @@ Route::group(['middleware' => 'auth'], function () {
         // route absen
         Route::post('/absen', [AbsenController::class, 'absen']);
 
-
-    });
-
-    Route::post('/test', function(){
-        dd('absen');
 
     });
 
