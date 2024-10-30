@@ -16,10 +16,22 @@ class AbsenController extends Controller
         $this->absenRepository = $absenRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $absens = $this->absenRepository->getAbsen();
-        return view('backoffice.absensi-data.absensi.index', compact('absens'));
+        if ($request->dariTgl) {
+            $dariTgl = $request->dariTgl;
+        } else {
+            $dariTgl = null;
+        }
+
+        if ($request->sampaiTgl) {
+            $sampaiTgl = $request->sampaiTgl;
+        } else {
+            $sampaiTgl = null;
+        }
+
+        $absens = $this->absenRepository->getAbsen($request);
+        return view('backoffice.absensi-data.absensi.index', compact(['absens', 'dariTgl', 'sampaiTgl']));
     }
 
     public function absen (Request $request)
@@ -54,6 +66,21 @@ class AbsenController extends Controller
         }
 
     }
+
+    public function update(Request $request, $id)
+    {
+        $this->absenRepository->update($request, $id);
+        alert()->success('Berhasil', 'Ubah Absen Berhasil');
+        return redirect()->back();
+    }
+
+    public function delete($id)
+    {
+        $this->absenRepository->delete($id);
+        alert()->success('Berhasil', 'Hapus Absen Berhasil');
+        return redirect()->back();
+    }
+
     public function absen_wfh (Request $request)
     {
         $request->validate([

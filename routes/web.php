@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Karyawan\IndexController;
+use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\QrCodeController;
 
 Route::get('/verify/{token}', [AuthController::class, 'verify']);
@@ -105,13 +106,27 @@ Route::group(['middleware' => 'auth'], function () {
             // grup absensi
             Route::group(['prefix' => 'absensi'], function () {
                 Route::get('/', [AbsenController::class, 'index']);
+
+                // grup absensi_id
+                Route::group(['prefix' => '{absensi_id}'], function () {
+                    Route::put('/update', [AbsenController::class, 'update']);
+                    Route::get('/delete', [AbsenController::class, 'delete']);
+                });
+            });
+
+            // grup pengajuan
+            Route::group(['prefix' => 'pengajuan'], function () {
+                Route::get('/', [PengajuanController::class, 'index']);
+                Route::post('/create', [PengajuanController::class, 'create']);
+
+                // grup pengajuan_id
+                Route::group(['prefix' => '{pengajuan_id}'], function () {
+                    Route::put('/update', [PengajuanController::class, 'update']);
+                    Route::get('/delete', [PengajuanController::class, 'delete']);
+                });
             });
 
         });
-
-        // route absen
-
-
 
     });
 

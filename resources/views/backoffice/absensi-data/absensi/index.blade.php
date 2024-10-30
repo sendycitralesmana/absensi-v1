@@ -24,17 +24,69 @@
 
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Absensi</h3>
+                    {{-- <h3 class="card-title">Absensi</h3> --}}
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
-                            data-toggle="tooltip" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+                    <div class="row flex justify-content-between mt-2">
+                        <form action="" class="form-inline">
+                            <div class="pr-4" style="border-right: 3px solid #0d6efd">
+                                <h3 class="card-title">
+                                    <b>Absensi</b>
+                                </h3>
+                            </div>
+    
+                            <div class="pl-4">
+    
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <label for="">Cari: </label>
+                                <label for="" class="ml-2">dari</label>
+                                <input type="date" name="dariTgl" class="form-control ml-2" max="{{ date('Y-m-d') }}" @if ($dariTgl) value="{{ $dariTgl }}" @endif>
+                                <label for="" class="ml-2">sampai</label>
+                                <input type="date" name="sampaiTgl" class="form-control ml-2" max="{{ date('Y-m-d') }}" @if ($sampaiTgl) value="{{ $sampaiTgl }}" @endif>
+                            </div>
+                            
+                            <div class="input-group ml-2">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+    
+                            @if ($dariTgl)
+                                <div class="input-group ml-2">
+                                    <a href="/backoffice/absensi-data/absensi" class="btn btn-primary btn-sm" title="Refresh">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            @endif
+    
+                        </form>
+    
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"
+                                data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
                 <div class="card-body">
+
+                    @if ($dariTgl)
+                        <div class="search">
+                            <div class="text-center">
+                                <span class="fa fa-search"></span> Hasil Pencarian dari: <b>
+                                    @if ($dariTgl)
+                                        {{ $dariTgl }}
+                                    @endif
+                                    @if ($sampaiTgl)
+                                        sampai {{ $sampaiTgl }}
+                                    @endif
+                                </b>
+                            </div>
+                            <hr>
+                        </div>
+                    @endif
         
                     <table class="table table-bordered table-hover text-center" id="example1">
                         <thead>
@@ -46,6 +98,7 @@
                                 <th>Status</th>
                                 <th>Keterangan</th>
                                 <th>Tanggal</th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,10 +111,23 @@
                                 <td>{{ $absen->status }}</td>
                                 <td>{{ $absen->keterangan }}</td>
                                 <td>{{ $absen->created_at->locale('ID')->isoFormat('dddd, D MMMM YYYY') }}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit-{{ $absen->id }}" title="Ubah">
+                                        <i class="fa fa-edit"></i> Ubah
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-{{ $absen->id }}" title="Hapus">
+                                        <i class="fa fa-trash"></i> Hapus
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+                    @foreach ($absens as $absen)
+                        @include('backoffice.absensi-data.absensi.modal.edit')
+                        @include('backoffice.absensi-data.absensi.modal.delete')
+                    @endforeach
 
                 </div>
 

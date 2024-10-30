@@ -3,13 +3,13 @@
     <!-- Brand Logo -->
     <a href="/backoffice/dashboard" class="brand-link">
         <div class="d-flex ">
-            <div>
-                <img src="{{ asset('images/mareca-logo.png') }}" alt="AdminLTE Logo" class="brand-image"
+            <div class="brand-image">
+                <img src="{{ asset('images/pt-zen.png') }}" alt="AdminLTE Logo" class="brand-image"
                     style="opacity: .8; width: 100%">
             </div>
-            <div class="ml-2">
-                <span class="brand-text" style="text-transform: uppercase"> <b>Absensi</b> </span>
-            </div>
+            {{-- <div class="ml-2">
+                <span class="brand-text" style="text-transform: uppercase"> <b></b> </span>
+            </div> --}}
         </div>
     </a>
 
@@ -108,7 +108,14 @@
                                 <a href="/backoffice/absensi-data/absensi"
                                     class="nav-link {{ request()->is('backoffice/absensi-data/absensi', 'backoffice/absensi-data/absensi/*') ? 'active' : '' }}">
                                     <i class="fa fa-circle fa-regular nav-icon"></i>
-                                    <p>Absensi</p>
+                                    <p>Report Absensi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/backoffice/absensi-data/pengajuan"
+                                    class="nav-link {{ request()->is('backoffice/absensi-data/pengajuan', 'backoffice/absensi-data/pengajuan/*') ? 'active' : '' }}">
+                                    <i class="fa fa-circle fa-regular nav-icon"></i>
+                                    <p>Pengajuan Absensi</p>
                                 </a>
                             </li>
                         </ul>

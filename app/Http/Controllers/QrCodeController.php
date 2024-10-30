@@ -24,7 +24,7 @@ class QrCodeController extends Controller
         try {
             $qrcode = $this->qrCodeRepository->getQrCode();
             $qr = QrCode::first();
-            $absens = Absen::get();
+            $absens = Absen::whereDate('created_at', now()->format('Y-m-d'))->get();
 
             if ($qrcode->count() == 0) {
                 $qrCode = null;

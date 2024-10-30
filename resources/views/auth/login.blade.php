@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mareca @yield('title')</title>
+    <title>PT Zen @yield('title')</title>
 
     {{-- icon web --}}
     <link rel="icon" type="image/png" href="{{ asset('images/mareca.logo.png') }}">
@@ -29,7 +29,7 @@
     <div class="login-box">
         <div class="card">
             <div class="text-center">
-                <img src="{{asset('images/mareca-logo.png')}}" class="img-fluid rounded mt-4" alt="" style="height: 100px; width: 180px">
+                <img src="{{asset('images/pt-zen.png')}}" class="img-fluid rounded mt-4" alt="" style="height: 100%; width: 180px">
             </div>
             
             <div class="card-body login-card-body">
@@ -46,7 +46,7 @@
                 </div>
                 @endif
 
-                <p class="login-box-msg">Masuk untuk mengakses halaman profil perusahaan CV Mareca Yasa Media</p>
+                <p class="login-box-msg">Masuk untuk mengakses halaman absensi</p>
                 @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                   <strong>Berhasil </strong>{{ session('success') }}
